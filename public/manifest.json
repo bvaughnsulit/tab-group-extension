@@ -1,0 +1,21 @@
+{
+  "name": "tab groups",
+  "version": "0.1",
+  "manifest_version": 3,
+  "permissions": ["tabGroups"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "collapseGroups": {
+      "suggested_key": {
+        "default": "Alt+Y",
+        "mac": "Alt+Y"
+      },
+      "description": "Run \"foo\" on the current page."
+    }
+  }
+}
