@@ -2,7 +2,10 @@
   "name": "tab groups",
   "version": "0.1",
   "manifest_version": 3,
-  "permissions": ["tabGroups"],
+  "permissions": [
+    "tabGroups",
+    "storage"
+  ],
   "action": {
     "default_popup": "popup.html"
   },
@@ -12,10 +15,17 @@
   "commands": {
     "collapseGroups": {
       "suggested_key": {
-        "default": "Alt+Y",
-        "mac": "Alt+Y"
+        "default": "Alt+G",
+        "mac": "Alt+G"
       },
-      "description": "Run \"foo\" on the current page."
+      "description": "collapse inactive tab groups"
+    },
+    "openTabGroupSwitcher": {
+      "suggested_key": {
+        "default": "Alt+Shift+G",
+        "mac": "Alt+Shift+G"
+      },
+      "description": "open tab group switcher"
     }
   }
 }

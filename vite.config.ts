@@ -6,11 +6,12 @@ export default defineConfig({
   plugins: [react()],
   base: '',
   build: {
+    target: 'esnext',
     minify: false,
     rollupOptions: {
       input: [
         'src/background.ts',
-        'src/main.tsx',
+        'src/popup.ts',
       ],
       output: {
         assetFileNames: '[name][extname]',
