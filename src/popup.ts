@@ -22,9 +22,11 @@ const select = document.createElement("select");
 select.id = "tab-group-select";
 select.size = groups.length;
 select.autofocus = true;
+select.className = "bg-none px-0 border-none bg-zinc-800 text-center overflow-hidden focus:ring-0"
 
 groups.forEach((group) => {
   const option = document.createElement("option");
+  option.className = 'text-xl text-slate-50'
   option.value = String(group.id);
   option.innerText = group.title || "";
   select.append(option);
