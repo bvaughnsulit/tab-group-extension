@@ -2,12 +2,9 @@
   "name": "tab groups",
   "version": "0.1",
   "manifest_version": 3,
-  "permissions": [
-    "tabGroups",
-    "storage"
-  ],
+  "permissions": ["tabGroups", "storage"],
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "options.html"
   },
   "background": {
     "service_worker": "background.js"

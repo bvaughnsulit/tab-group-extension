@@ -10,6 +10,7 @@ export default defineConfig({
       input: [
         'src/background.ts',
         'src/popup.ts',
+        'src/options.ts',
       ],
       output: {
         assetFileNames: '[name][extname]',

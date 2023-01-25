@@ -1,3 +1,5 @@
+const { debugMode } = await chrome.storage.sync.get("debugMode");
+
 // esc closes the popup
 window.addEventListener("keydown", (event) => {
   if (event.keyCode === 27) {
@@ -7,7 +9,9 @@ window.addEventListener("keydown", (event) => {
 
 // close popup if loses focus
 window.addEventListener("blur", (event) => {
-  close();
+  if (!debugMode) {
+    close();
+  }
 });
 
 const form = document.getElementById("form");
@@ -32,27 +36,59 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const selectedGroupId = Number(event.target["tab-group-select"].value);
 
-  // focus the window of the tab group
-  const { windowId } = await chrome.tabGroups.get(selectedGroupId);
+  // get window the selected group is in
+  let windowId;
+  try {
+    const windowInfo = await chrome.tabGroups.get(selectedGroupId);
+    windowId = windowInfo.windowId;
+  } catch (err) {
+    console.log(err);
+  }
 
   // get most recently viewed tabId in selected group
-  const storageResult = await chrome.storage.local.get([String(selectedGroupId)]);
-  const [tabId] = Object.values(storageResult);
-  let tabIdToFocus
+  let storedTabId;
+  try {
+    const storageResult = await chrome.storage.local.get([
+      String(selectedGroupId),
+    ]);
+    storedTabId = Object.values(storageResult)[0];
+  } catch (err) {
+    console.log(err);
+  }
 
-  if (tabId) {
+  let tabIdToFocus;
+
+  if (storedTabId) {
     // make sure most recently viewed tab is still in selected tab group
-    const { groupId } = await chrome.tabs.get(tabId)
-    if (groupId === selectedGroupId){ tabIdToFocus = tabId }
+    let tabInfo;
+    try {
+      tabInfo = await chrome.tabs.get(storedTabId);
+      console.log(tabInfo, "tabinfo");
+      if (tabInfo.groupId === selectedGroupId) {
+        tabIdToFocus = storedTabId;
+      }
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   if (!tabIdToFocus) {
     // if no most recently viewed tab is saved, get first tab in group
-    const tabsInGroup = await chrome.tabs.query({
-      groupId: selectedGroupId,
-    });
-    tabIdToFocus = tabsInGroup[0].id
-  } 
-  chrome.tabs.update(tabIdToFocus, { active: true });
-  chrome.windows.update(windowId, { focused: true });
+    let tabsInGroup;
+    try {
+      tabsInGroup = await chrome.tabs.query({
+        groupId: selectedGroupId,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    tabIdToFocus = tabsInGroup[0].id;
+    console.log(tabIdToFocus, "negative case");
+  }
+  try {
+    chrome.tabs.update(tabIdToFocus, { active: true });
+    chrome.windows.update(windowId, { focused: true });
+  } catch {
+    console.log(err);
+  }
 });
