@@ -8,9 +8,9 @@ export default defineConfig({
     minify: false,
     rollupOptions: {
       input: [
+        './popup.html',
+        './options.html',
         'src/background.ts',
-        'src/popup.ts',
-        'src/options.ts',
       ],
       output: {
         assetFileNames: '[name][extname]',
