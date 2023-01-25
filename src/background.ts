@@ -23,17 +23,29 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
   if (groupId !== -1) {
     chrome.storage.local.set({ [groupId.toString()]: tabId });
   }
-  const storage = await chrome.storage.local.get(null);
-  console.log(groupId, storage);
 });
 
 async function openTabGroupSwitcher() {
-  console.log("tab group switcher invoked");
+  const popupWidth = 400;
+  const popupHeight = 250;
+  let popupLeftPos, popupTopPos;
+
+  try {
+    const lastWindow = await chrome.windows.getCurrent();
+    const { left, top, height, width } = lastWindow;
+    popupLeftPos = parseInt(left + (width - popupWidth) / 2);
+    popupTopPos = parseInt(top + (height - popupHeight) / 8);
+  } catch (err) {
+    console.log(err);
+  }
+
   const newWindow = await chrome.windows.create({
     url: "popup.html",
     focused: true,
-    height: 200,
-    width: 300,
+    height: popupHeight,
+    width: popupWidth,
+    top: popupTopPos,
+    left: popupLeftPos,
     type: "popup",
   });
 }
