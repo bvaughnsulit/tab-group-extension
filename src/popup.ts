@@ -1,32 +1,20 @@
 const { debugMode } = await chrome.storage.sync.get("debugMode");
 
-// esc closes the popup
-window.addEventListener("keydown", (event) => {
-  if (event.keyCode === 27) {
-    close();
-  }
-});
-
-// close popup if loses focus
-window.addEventListener("blur", (event) => {
-  if (!debugMode) {
-    close();
-  }
-});
-
 const form = document.getElementById("form");
 
 const groups = await chrome.tabGroups.query({});
+
 
 const select = document.createElement("select");
 select.id = "tab-group-select";
 select.size = groups.length;
 select.autofocus = true;
-select.className = "bg-none px-0 border-none bg-zinc-800 text-center overflow-hidden focus:ring-0"
+select.className =
+  "bg-none px-0 border-none bg-zinc-800 text-center overflow-hidden focus:ring-0";
 
 groups.forEach((group) => {
   const option = document.createElement("option");
-  option.className = 'text-xl text-slate-50'
+  option.className = "text-xl text-slate-50";
   option.value = String(group.id);
   option.innerText = group.title || "";
   select.append(option);
@@ -85,12 +73,47 @@ form.addEventListener("submit", async (event) => {
       console.log(err);
     }
     tabIdToFocus = tabsInGroup[0].id;
-    console.log(tabIdToFocus, "negative case");
   }
   try {
     chrome.tabs.update(tabIdToFocus, { active: true });
     chrome.windows.update(windowId, { focused: true });
   } catch {
     console.log(err);
+  }
+});
+
+
+// key commands
+window.addEventListener("keydown", (event) => {
+  // esc closes the popup
+  if (event.keyCode === 27) {
+    close();
+  }
+
+  // tab or CTRL-N to scroll down
+  if (
+    (event.keyCode === 78 && event.ctrlKey) ||
+    (event.keyCode === 9 && !event.shiftKey)
+  ) {
+    if (++select.selectedIndex > select.length - 1) {
+      select.selectedIndex = 0;
+    }
+  }
+
+  // shift-tab or CTRL-P to scroll up
+  if (
+    (event.keyCode === 80 && event.ctrlKey) ||
+    (event.keyCode === 9 && event.shiftKey)
+  ) {
+    if (--select.selectedIndex < 0) {
+      select.selectedIndex = select.length - 1;
+    }
+  }
+});
+
+// close popup if loses focus
+window.addEventListener("blur", (event) => {
+  if (!debugMode) {
+    close();
   }
 });
