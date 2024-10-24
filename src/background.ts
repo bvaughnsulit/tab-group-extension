@@ -1,3 +1,11 @@
+chrome.action.onClicked.addListener(
+  () => {
+    chrome.tabs.create({
+      url: "manager.html",
+    });
+  },
+);
+
 // listen for commands
 chrome.commands.onCommand.addListener((command) => {
   if (command === "collapseGroups") {

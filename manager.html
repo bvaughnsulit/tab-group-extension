@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-size: 16px;
+      }
+
+      .tab-info {
+        padding: 10px;
+      }
+  </style>
+  </head>
+  <body>
+
+  <form id='optsForm' style="margin-bottom: 20px;">
+
+    <label for="sortBy">sort by:</label>
+    <select name="sortBy" id="sortBy">
+      <option value="default">default</option>
+      <option value="title" disabled>title</option>
+      <option value="url" disabled>url</option>
+      <option value="date" disabled>date</option>
+    </select>
+
+    <label for="show">show:</label>
+    <select name="show" id="show">
+      <option value="all">all</option>
+      <option value="dupesOnly">dupes only</option>
+    </select>
+
+  </form>
+
+  <div id="tabList"></div>
+  <button id="exportBtn" style="display: block">Export</button>
+  <textarea id="exported" style="width: 30%; height: 200px;"></textarea>
+
+    <form id='form' style="width:200px">
+
+      <input type="checkbox" id="debugMode" name="debugMode" value="debugMode">
+      <label for="debugMode">debug mode</label><br>
+
+      <input type="checkbox" id="option2" name="option2" value="option2">
+      <label for="option2">option 2</label><br>
+
+    </form>
+
+    <div>
+      <button id='logLocalStorage'>Log Local Storage to console</button>
+      <button id='logSyncStorage'>Log Sync Storage to console</button>
+      <button id='clearLocalStorage'>Clear Local Storage</button>
+      <button id='clearSyncStorage'>Clear Sync Storage</button>
+    </div>
+
+    </div>
+    <script type="module" src="./src/manager.ts"></script>
+  </body>
+</html>

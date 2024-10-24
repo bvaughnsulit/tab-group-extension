@@ -1,11 +1,13 @@
 {
-  "name": "tab groups",
+  "name": "tab manager",
   "version": "0.1",
   "manifest_version": 3,
-  "permissions": ["tabGroups", "storage"],
-  "action": {
-    "default_popup": "options.html"
-  },
+  "permissions": [
+    "tabGroups",
+    "tabs",
+    "storage"
+  ],
+  "action": {},
   "background": {
     "service_worker": "background.js"
   },

@@ -1,24 +1,21 @@
-import { defineConfig } from 'vite'
+import { defineConfig } from "vite";
 
 export default defineConfig({
   plugins: [],
-  base: '',
+  base: "",
   build: {
-    target: 'esnext',
+    target: "esnext",
     minify: false,
     rollupOptions: {
       input: [
-        './popup.html',
-        './options.html',
-        'src/background.ts',
+        "./popup.html",
+        "./manager.html",
+        "src/background.ts",
       ],
       output: {
-        assetFileNames: '[name][extname]',
-        entryFileNames: '[name].js'
-      }
-    }
+        assetFileNames: "[name][extname]",
+        entryFileNames: "[name].js",
+      },
+    },
   },
-})
-
-
-
+});
