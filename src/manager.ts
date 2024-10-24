@@ -55,6 +55,7 @@ const renderTabTable = async ({ sortBy, show }: {
     const tabId = String(tab.id);
     const dupes = urlMap.get(tab.url!) || [];
     if (show === SHOW_OPTIONS.dupesOnly && dupes.length <= 1) return;
+    if (tab.url === window.location.href) return;
 
     const el = document.createElement("div");
     el.id = tabId;
@@ -83,7 +84,6 @@ const renderTabTable = async ({ sortBy, show }: {
         document.getElementById(tabId)?.remove();
       });
     });
-    closeBtn.disabled = tab.url === window.location.href;
 
     const closeDupesBtn = document.createElement("button");
     closeDupesBtn.textContent = `close ${dupes.length - 1} dupes`;

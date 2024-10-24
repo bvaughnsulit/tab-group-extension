@@ -10,6 +10,10 @@
       .tab-info {
         padding: 10px;
       }
+
+      #debug button {
+        display: block;
+      }
   </style>
   </head>
   <body>
@@ -33,20 +37,16 @@
   </form>
 
   <div id="tabList"></div>
-  <button id="exportBtn" style="display: block">Export</button>
-  <textarea id="exported" style="width: 30%; height: 200px;"></textarea>
 
-    <form id='form' style="width:200px">
+    <div id='debug' style='margin-top: 20px'>
+      <button id="exportBtn">Export</button>
+      <textarea id="exported" style="width: 30%; height: 200px;"></textarea>
 
-      <input type="checkbox" id="debugMode" name="debugMode" value="debugMode">
-      <label for="debugMode">debug mode</label><br>
+      <form id='form' style="width:200px; margin-bottom: 8px">
+        <input type="checkbox" id="debugMode" name="debugMode" value="debugMode">
+        <label for="debugMode">debug mode</label><br>
+      </form>
 
-      <input type="checkbox" id="option2" name="option2" value="option2">
-      <label for="option2">option 2</label><br>
-
-    </form>
-
-    <div>
       <button id='logLocalStorage'>Log Local Storage to console</button>
       <button id='logSyncStorage'>Log Sync Storage to console</button>
       <button id='clearLocalStorage'>Clear Local Storage</button>
